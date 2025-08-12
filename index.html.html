@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AldMarket — Vitrine</title>
+  <style>
+    :root{
+      --bg:#090909; --card:#0f0f10; --muted:#9aa6b2; --accent:#a855f7; --glass: rgba(255,255,255,0.03);
+      --radius:16px; --maxw:1200px;
+      font-family: Inter, sans-serif;
+    }
+    body{
+      margin:0; background:#060607; color:#e6eef6;
+      font-size:16px; line-height:1.4;
+    }
+    .wrap{max-width:var(--maxw);margin:auto;padding:24px}
+    header.topbar{display:flex;justify-content:space-between;align-items:center;padding:10px 0}
+    .logo{font-weight:800;color:var(--accent);font-size:1.3rem}
+    nav{display:flex;gap:18px}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600;transition:color 0.3s ease;}
+    nav a:hover, nav a.active{color:var(--accent);}
+    nav a.cta{
+      background:var(--accent);
+      color:#fff;
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:700;
+      text-decoration:none;
+      transition: box-shadow 0.3s ease;
+    }
+    nav a.cta:hover {
+      box-shadow: 0 0 15px var(--accent);
+    }
+    .hero{background:linear-gradient(180deg, rgba(88,85,247,0.1), rgba(6,10,15,0.6));padding:40px;border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,0.6);display:flex;gap:28px;align-items:center}
+    .hero-left{flex:1}
+    .kicker{color:var(--accent);font-weight:700;margin-bottom:8px}
+    h1{font-size:38px;margin:0 0 8px}
+    p.lead{color:var(--muted);margin:0 0 18px}
+    .hero-actions{display:flex;gap:12px}
+    .btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.03);padding:12px 18px;border-radius:12px;color:inherit;text-decoration:none;font-weight:700;transition:background 0.3s ease, color 0.3s ease;}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#c084fc);color:#fff;border:none}
+    .btn:hover{background:var(--accent);color:#fff;border:none;}
+    .hero-stats{display:flex;gap:26px;margin-top:20px}
+    .stat{min-width:80px;text-align:center}
+    .stat .num{font-size:20px;font-weight:800;color:var(--accent)}
+    .stat .label{font-size:12px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+    .card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02);transition:transform .3s ease, box-shadow .3s ease, filter .3s ease;cursor:pointer}
+    .card:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 18px 40px rgba(168,85,247,0.4);filter:brightness(1.1)}
+    .media{height:150px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#1e1e1e}
+    .media img{width:100%;height:100%;object-fit:cover;display:block}
+    .body{padding:14px}
+    .title{font-weight:800;margin:0 0 6px;font-size:16px}
+    .price{color:var(--accent);font-weight:800}
+    footer{margin-top:40px;color:var(--muted);font-size:14px;text-align:center}
+
+    /* Modal produit (inchangé visuellement) */
+    .modal { display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; background-color: rgba(0,0,0,0.8); }
+    .modal-content { background-color:var(--card); margin:5% auto; padding:20px; border-radius:var(--radius); max-width:900px; box-shadow:0 8px 20px rgba(0,0,0,0.6);}
+    .modal-body { display:flex; flex-wrap:wrap; gap:30px; }
+    .modal-image { flex:1 1 300px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:200px; background:#111; }
+    .modal-image img{ width:100%; height:auto; display:block }
+    .modal-details { flex:1 1 300px; max-height:400px; overflow-y:auto; padding-right:10px; }
+    .close { float:right; font-size:28px; cursor:pointer; color:var(--muted); }
+    .close:hover { color:white; }
+    .option-box { border:1px solid #333; padding:8px; border-radius:8px; margin-bottom:8px; background: rgba(255,255,255,0.01); }
+    .option-box strong { color:var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="logo">AldMarket</div>
+      <nav>
+        <a href="#conditions">Conditions</a>
+        <a href="#catalog">Catalogue</a>
+        <a href="https://discord.gg/8cwHjQW5" target="_blank">Contact</a>
+        <a class="cta" href="#catalog">Parcourir</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-left">
+        <div class="kicker">Abonnements & Services</div>
+        <h1>Abonnements numériques et services Discord</h1>
+        <p class="lead">Améliorez votre expérience Discord avec AldMarket — produits premium, livraison via support Discord, et assistance rapide.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#catalog">Parcourir les produits</a>
+          <a class="btn" href="https://discord.gg/8cwHjQW5" target="_blank">Support</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="num">27+</div><div class="label">Produits</div></div>
+          <div class="stat"><div class="num">5.0/5</div><div class="label">Réputation</div></div>
+          <div class="stat"><div class="num">50+</div><div class="label">Clients</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catalogue -->
+    <main id="catalog" class="grid">
+      <!-- Décorations -->
+      <div class="card product"
+           data-title="Décorations via Gift Link"
+           data-image="https://via.placeholder.com/800x500.png?text=Decorations"
+           data-options='[
+             {"label":"4,99 €","ltc":"1 € Litecoin","pp":"1,30 € PayPal"},
+             {"label":"5,99 €","ltc":"1,50 € Litecoin","pp":"1,80 € PayPal"},
+             {"label":"6,99 €","ltc":"1,90 € Litecoin","pp":"2,20 € PayPal"},
+             {"label":"7,99 €","ltc":"2,20 € Litecoin","pp":"2,60 € PayPal"},
+             {"label":"8,49 €","ltc":"2,90 € Litecoin","pp":"3,00 € PayPal"},
+             {"label":"9,99 €","ltc":"3,00 € Litecoin","pp":"3,90 € PayPal"},
+             {"label":"11,99 €","ltc":"4,00 € Litecoin","pp":"4,50 € PayPal"}
+           ]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=Decorations" alt="Décorations"></div>
+        <div class="body">
+          <div class="title">Décorations via Gift Link</div>
+          <div class="price">À partir de 4,99€</div>
+        </div>
+      </div>
+
+      <!-- Comptes Roblox -->
+      <div class="card product"
+           data-title="Comptes Roblox"
+           data-image="https://via.placeholder.com/800x500.png?text=Roblox"
+           data-options='[
+             {"label":"1 000 à 2 500 Robux (57 en stock)","price":"6 €"},
+             {"label":"2 500 à 5 000 Robux (38 en stock)","price":"7 €"},
+             {"label":"5 000 à 10 000 Robux (37 en stock)","price":"10 €"},
+             {"label":"10 000 à 15 000 Robux (24 en stock)","price":"15 €"},
+             {"label":"15 000 à 25 000 Robux (27 en stock)","price":"30 €"},
+             {"label":"25 000 à 50 000 Robux (16 en stock)","price":"45 €"}
+           ]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=Roblox" alt="Roblox"></div>
+        <div class="body">
+          <div class="title">Comptes Roblox</div>
+          <div class="price">À partir de 6€</div>
+        </div>
+      </div>
+
+      <!-- VPN -->
+      <div class="card product"
+           data-title="VPN — Abonnements à vie et 1 an"
+           data-image="https://via.placeholder.com/800x500.png?text=VPN"
+           data-options='[
+             {"label":"NordVPN à vie (10 en stock)","price":"1,00 €"},
+             {"label":"VPN Pur à vie (10 en stock)","price":"0,80 €"},
+             {"label":"Mullvad VPN à vie (10 en stock)","price":"3,50 €"},
+             {"label":"AdGuard VPN à vie (10 en stock)","price":"0,80 €"},
+             {"label":"CyberGhost VPN 1 an (10 en stock)","price":"0,80 €"},
+             {"label":"TunnelBear VPN (10 en stock)","price":"0,50 €"},
+             {"label":"IP Vanish VPN 1 an (10 en stock)","price":"0,20 €"},
+             {"label":"HotSpot Shield VPN 1 an (10 en stock)","price":"0,80 €"}
+           ]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=VPN" alt="VPN"></div>
+        <div class="body">
+          <div class="title">VPN — Abonnements à vie et 1 an</div>
+          <div class="price">À partir de 0,20€</div>
+        </div>
+      </div>
+
+      <!-- Nitro Boost -->
+      <div class="card product"
+           data-title="Nitro Boost Discord"
+           data-image="https://via.placeholder.com/800x500.png?text=Nitro+Boost"
+           data-options='[{"label":"Prix variables selon la durée","price":"À partir de 1,90 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=Nitro+Boost" alt="Nitro Boost"></div>
+        <div class="body">
+          <div class="title">Nitro Boost Discord</div>
+          <div class="price">À partir de 1,90€</div>
+        </div>
+      </div>
+
+      <!-- Comptes Discord FA -->
+      <div class="card product"
+           data-title="Comptes Discord FA"
+           data-image="https://via.placeholder.com/800x500.png?text=Discord+FA"
+           data-options='[
+             {"label":"E-mail vérifié (865 en stock)","price":"0,012 €"},
+             {"label":"E-mail vérifié + Téléphone vérifié (En rupture)","price":"0,17 €"},
+             {"label":"Âgé de +3 mois, e-mail et téléphone vérifiés (En rupture)","price":"0,20 €"},
+             {"label":"Comptes 2023 (En rupture)","price":"0,60 €"},
+             {"label":"Comptes 2020 (En rupture)","price":"1,50 €"},
+             {"label":"1 mois de Nitro + 2 Boosts + Téléphone vérifié (En rupture)","price":"2 €"},
+             {"label":"Comptes 2019 (En rupture)","price":"3 €"},
+             {"label":"3 mois de Nitro + 2 Boosts + Téléphone vérifié (En rupture)","price":"4 €"},
+             {"label":"Comptes 2017 (14 en stock)","price":"7 €"},
+             {"label":"Comptes 2016 (En rupture)","price":"12 €"}
+           ]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=Discord+FA" alt="Discord FA"></div>
+        <div class="body">
+          <div class="title">Comptes Discord FA</div>
+          <div class="price">À partir de 0,012€</div>
+        </div>
+      </div>
+
+      <!-- Comptes YouTube -->
+      <div class="card product"
+           data-title="Comptes YouTube à vie"
+           data-image="https://via.placeholder.com/800x500.png?text=YouTube"
+           data-options='[{"label":"13 en stock","price":"3,20 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=YouTube" alt="YouTube"></div>
+        <div class="body">
+          <div class="title">Comptes YouTube à vie</div>
+          <div class="price">3,20€</div>
+        </div>
+      </div>
+
+      <!-- Disney+ -->
+      <div class="card product"
+           data-title="Disney+ Lifetime FA"
+           data-image="https://via.placeholder.com/800x500.png?text=Disney%2B"
+           data-options='[{"label":"44 en stock","price":"4 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=Disney%2B" alt="Disney+"></div>
+        <div class="body">
+          <div class="title">Disney+ Lifetime FA</div>
+          <div class="price">4€</div>
+        </div>
+      </div>
+
+      <!-- HBO Max -->
+      <div class="card product"
+           data-title="Comptes HBO Max à vie"
+           data-image="https://via.placeholder.com/800x500.png?text=HBO+Max"
+           data-options='[{"label":"25 en stock","price":"1 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=HBO+Max" alt="HBO Max"></div>
+        <div class="body">
+          <div class="title">Comptes HBO Max à vie</div>
+          <div class="price">1€</div>
+        </div>
+      </div>
+
+      <!-- TikTok +10k -->
+      <div class="card product"
+           data-title="Comptes TikTok +10k abonnés"
+           data-image="https://via.placeholder.com/800x500.png?text=TikTok"
+           data-options='[{"label":"10 en stock","price":"20 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=TikTok" alt="TikTok"></div>
+        <div class="body">
+          <div class="title">Comptes TikTok +10k abonnés</div>
+          <div class="price">20€</div>
+        </div>
+      </div>
+
+      <!-- Instagram 5k+ -->
+      <div class="card product"
+           data-title="Instagram +5k abonnés"
+           data-image="https://via.placeholder.com/800x500.png?text=Instagram"
+           data-options='[{"label":"3 en stock","price":"25 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=Instagram" alt="Instagram"></div>
+        <div class="body">
+          <div class="title">Instagram +5k abonnés</div>
+          <div class="price">25€</div>
+        </div>
+      </div>
+
+      <!-- Telegram Premium -->
+      <div class="card product"
+           data-title="Comptes Telegram Premium"
+           data-image="https://via.placeholder.com/800x500.png?text=Telegram"
+           data-options='[{"label":"11 en stock","price":"7 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=Telegram" alt="Telegram"></div>
+        <div class="body">
+          <div class="title">Comptes Telegram Premium</div>
+          <div class="price">7€</div>
+        </div>
+      </div>
+
+      <!-- Spotify -->
+      <div class="card product"
+           data-title="Compte Spotify à vie"
+           data-image="https://via.placeholder.com/800x500.png?text=Spotify"
+           data-options='[{"label":"12 en stock","price":"2 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=Spotify" alt="Spotify"></div>
+        <div class="body">
+          <div class="title">Compte Spotify à vie</div>
+          <div class="price">2€</div>
+        </div>
+      </div>
+
+      <!-- ChatGPT+ -->
+      <div class="card product"
+           data-title="Compte ChatGPT+"
+           data-image="https://via.placeholder.com/800x500.png?text=ChatGPT%2B"
+           data-options='[{"label":"28 en stock","price":"5 €"}]'>
+        <div class="media"><img src="https://via.placeholder.com/600x300.png?text=ChatGPT%2B" alt="ChatGPT+"></div>
+        <div class="body">
+          <div class="title">Compte ChatGPT+</div>
+          <div class="price">5€</div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Modal -->
+    <div id="productModal" class="modal" aria-hidden="true">
+      <div class="modal-content" role="dialog" aria-modal="true">
+        <span class="close" aria-label="Fermer">&times;</span>
+        <div class="modal-body">
+          <div class="modal-image" id="productImage"></div>
+          <div class="modal-details">
+            <h2 id="productTitle"></h2>
+            <div id="productDesc"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>© AldMarket — Vitrine</footer>
+  </div>
+
+  <script>
+    // Ouvre le modal et affiche image + options
+    document.querySelectorAll('.product').forEach(prod => {
+      prod.addEventListener('click', () => {
+        document.getElementById('productTitle').textContent = prod.dataset.title || '';
+
+        // image (dataset.image doit être une URL valide)
+        const imgUrl = prod.dataset.image || 'https://via.placeholder.com/800x500.png?text=Produit';
+        document.getElementById('productImage').innerHTML = `<img src="${imgUrl}" alt="${prod.dataset.title || 'Produit'}">`;
+
+        // options
+        let descHTML = "";
+        if (prod.dataset.options) {
+          try {
+            let options = JSON.parse(prod.dataset.options);
+            options.forEach(opt => {
+              descHTML += `<div class="option-box">
+                <strong>${opt.label}</strong><br>
+                ${opt.ltc ? `Litecoin : ${opt.ltc}<br>` : ""}
+                ${opt.pp ? `PayPal : ${opt.pp}<br>` : ""}
+                ${opt.price ? `Prix : ${opt.price}<br>` : ""}
+                <a href="https://discord.gg/8cwHjQW5" target="_blank" rel="noopener" class="btn primary" style="margin-top:8px;display:inline-block;">Acheter</a>
+              </div>`;
+            });
+          } catch(e){
+            descHTML = '<div class="option-box">Aucune option valide</div>';
+          }
+        }
+        document.getElementById('productDesc').innerHTML = descHTML;
+        document.getElementById('productModal').style.display = 'block';
+        document.getElementById('productModal').setAttribute('aria-hidden','false');
+      });
+    });
+
+    // fermeture modal
+    document.querySelectorAll('.close').forEach(c => c.addEventListener('click', closeModal));
+    function closeModal(){
+      document.getElementById('productModal').style.display = 'none';
+      document.getElementById('productModal').setAttribute('aria-hidden','true');
+    }
+    window.addEventListener('click', (e) => {
+      if(e.target === document.getElementById('productModal')) closeModal();
+    });
+    // echap pour fermer
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>
